@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import './App.css';
 
-function Todo({todo, index, completeTodo, deleteTodo}) {
+function Todo({todo, index, completeTodo, deleteTodo, activeTodo}) {
   return <div style={{textDecoration: todo.isCompleted ? 'line-through' : '' }} 
   className="todo">
   { todo.text }
   <div>
     <button onClick={() => completeTodo(index)}>Complate</button>
+    <button onClick={() => activeTodo(index)}>Active</button>
     <button onClick={() => deleteTodo(index)}>Delete</button>
   </div>
   </div>;
@@ -52,18 +53,24 @@ function App() {
   const addTodo = text => {
     const NewTodos = [...todos, {text}];
     setTodos(NewTodos);
-  }
+  };
 
   const completeTodo = index => {
     const newTodos = [...todos];
     newTodos[index].isCompleted = true;
     setTodos(newTodos);
-  }
+  };
 
   const deleteTodo = index => {
     const newTodos = [...todos];
     newTodos.splice(index, 1);
     setTodos(newTodos);
+  };
+
+  const activeTodo = index => {
+    const activeTodos = [...todos];
+    activeTodos[index].isCompleted = false;
+    setTodos(activeTodos);
   };
 
   return (
@@ -75,6 +82,7 @@ function App() {
           todo={todo} 
           completeTodo={completeTodo}
           deleteTodo={deleteTodo}
+          activeTodo={activeTodo}
           />
         ))}
 
